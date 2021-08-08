@@ -8,10 +8,7 @@ datasources:
     driverClassName: org.postgresql.Driver
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:password}
-    maximum-pool-size: 5
-    minimum-idle: 1
-    idle-timeout: 10000
-    connection-timeout: 20000
+#    dialect: POSTGRES
 
 jpa:
   default:
@@ -19,3 +16,6 @@ jpa:
       hibernate:
         hbm2ddl:
           auto: update
+
+app:
+  url: http://localhost:8080

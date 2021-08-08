@@ -5,6 +5,7 @@ plugins {
     id("io.micronaut.application") version "1.5.4"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.4.32"
+    id("org.jetbrains.kotlin.plugin.noarg") version "1.5.21"
 }
 
 version = "0.1"
@@ -28,19 +29,28 @@ dependencies {
     kapt("io.micronaut.data:micronaut-data-processor")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-runtime")
-    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
-    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("javax.annotation:javax.annotation-api")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
-    runtimeOnly("ch.qos.logback:logback-classic")
-    implementation("org.postgresql:postgresql")
-    testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:postgresql")
-    testImplementation("org.testcontainers:testcontainers")
+    implementation("io.micronaut.xml:micronaut-jackson-xml")
     implementation("io.micronaut:micronaut-validation")
 
+    // JPA
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("org.postgresql:postgresql:42.2.23")
+
+    // Tests
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5:2.3.7")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation("com.h2database:h2")
+    testImplementation("org.mockito:mockito-core:3.+")
+    testImplementation("org.assertj:assertj-core:3.6.1")
+
+    runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 }
