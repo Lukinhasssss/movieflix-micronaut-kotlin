@@ -57,4 +57,14 @@ class UserController(
         }
     }
 
+    @Delete("/{id}")
+    fun delete(@PathVariable id: String): HttpResponse<Any> {
+        userRepository.findById(id).let {
+            if (it.isEmpty)
+                return HttpResponse.notFound(mapOf(Pair("message", "user not found")))
+            userRepository.deleteById(id)
+            return HttpResponse.noContent()
+        }
+    }
+
 }
