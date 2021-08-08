@@ -1,5 +1,6 @@
 package br.com.lukinhasssss.dto.request
 
+import br.com.lukinhasssss.config.security.BCryptPasswordEncoder
 import br.com.lukinhasssss.config.validations.UserExists
 import br.com.lukinhasssss.entities.User
 import io.micronaut.core.annotation.Introspected
@@ -22,11 +23,11 @@ data class NewUserRequest(
     val password: String
 
 ) {
-    fun convertToUser(): User {
+    fun convertToUser(passwordEncoder: BCryptPasswordEncoder): User {
         return User(
             username = username,
             email = email,
-            password = password
+            password = passwordEncoder.encode(password)
         )
     }
 

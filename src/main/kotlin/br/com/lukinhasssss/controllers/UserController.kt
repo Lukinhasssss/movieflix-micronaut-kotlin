@@ -1,5 +1,6 @@
 package br.com.lukinhasssss.controllers
 
+import br.com.lukinhasssss.config.security.BCryptPasswordEncoder
 import br.com.lukinhasssss.dto.request.NewUserRequest
 import br.com.lukinhasssss.repositories.UserRepository
 import io.micronaut.context.annotation.Value
@@ -13,14 +14,17 @@ import javax.validation.Valid
 
 @Validated
 @Controller("/users")
-class UserController(val userRepository: UserRepository) {
+class UserController(
+    val userRepository: UserRepository,
+    private val passwordEncoder: BCryptPasswordEncoder
+) {
 
     @Value("\${app.url}")
     lateinit var appUrl: String
 
     @Post
     fun registry(@Valid @Body request: NewUserRequest): HttpResponse<Unit> {
-        request.convertToUser().let {
+        request.convertToUser(passwordEncoder).let {
             userRepository.save(it)
             val uri = UriBuilder.of("$appUrl/autores/{id}").expand(mutableMapOf(Pair("id", it.id)))
             return HttpResponse.created(uri)

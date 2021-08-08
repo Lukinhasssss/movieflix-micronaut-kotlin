@@ -36,6 +36,10 @@ dependencies {
     implementation("io.micronaut.xml:micronaut-jackson-xml")
     implementation("io.micronaut:micronaut-validation")
 
+    // BCrypt Password Encoder
+    implementation("org.springframework.security:spring-security-crypto:5.4.2")
+    compile("commons-logging:commons-logging:1.2")
+
     // JPA
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
