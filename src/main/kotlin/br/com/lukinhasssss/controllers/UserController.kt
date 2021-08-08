@@ -2,6 +2,7 @@ package br.com.lukinhasssss.controllers
 
 import br.com.lukinhasssss.config.security.BCryptPasswordEncoder
 import br.com.lukinhasssss.dto.request.NewUserRequest
+import br.com.lukinhasssss.dto.request.UpdateUserRequest
 import br.com.lukinhasssss.dto.response.UserResponse
 import br.com.lukinhasssss.repositories.UserRepository
 import io.micronaut.context.annotation.Value
@@ -42,6 +43,17 @@ class UserController(
             userRepository.save(it)
             val uri = UriBuilder.of("$appUrl/autores/{id}").expand(mutableMapOf(Pair("id", it.id)))
             return HttpResponse.created(uri)
+        }
+    }
+
+    @Put("/{id}")
+    fun update(@PathVariable id: String, @Valid @Body request: UpdateUserRequest): HttpResponse<Any> {
+        userRepository.findById(id).let {
+            if (it.isEmpty)
+                return HttpResponse.notFound(mapOf(Pair("message", "user not found")))
+            it.get().username = request.username
+            userRepository.update(it.get())
+            return HttpResponse.ok(UserResponse(it.get()))
         }
     }
 
