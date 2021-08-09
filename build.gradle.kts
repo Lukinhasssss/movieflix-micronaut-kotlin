@@ -34,7 +34,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     implementation("io.micronaut.xml:micronaut-jackson-xml")
-    implementation("io.micronaut:micronaut-validation")
+//    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
 
     // BCrypt Password Encoder
     implementation("org.springframework.security:spring-security-crypto:5.4.2")

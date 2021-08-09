@@ -10,6 +10,8 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
+import javax.persistence.EntityManager
+import javax.transaction.Transactional
 import javax.validation.Valid
 
 @Validated
