@@ -11,7 +11,7 @@ data class Genre(
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String? = null,
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     val name: String
 
 )

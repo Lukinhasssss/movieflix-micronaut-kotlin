@@ -23,7 +23,7 @@ data class NewUserRequest(
     val password: String
 
 ) {
-    fun convertToUser(passwordEncoder: BCryptPasswordEncoder): User {
+    fun toEntity(passwordEncoder: BCryptPasswordEncoder): User {
         return User(
             username = username,
             email = email,

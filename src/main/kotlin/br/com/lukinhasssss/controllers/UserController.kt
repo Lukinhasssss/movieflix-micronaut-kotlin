@@ -34,16 +34,16 @@ class UserController(
     fun findById(@PathVariable id: String): HttpResponse<Any> {
         userRepository.findById(id).let {
             if (it.isEmpty)
-                return HttpResponse.notFound(mapOf(Pair("message", "user not found")))
+                return HttpResponse.notFound(mapOf(Pair("mensagem", "usuário não encontrado!")))
             return HttpResponse.ok(UserResponse(it.get()))
         }
     }
 
     @Post
     fun registry(@Valid @Body request: NewUserRequest): HttpResponse<Unit> {
-        request.convertToUser(passwordEncoder).let {
+        request.toEntity(passwordEncoder).let {
             userRepository.save(it)
-            val uri = HttpResponse.uri("$appUrl/autores/${it.id}")
+            val uri = HttpResponse.uri("$appUrl/users/${it.id}")
 //            val uri = UriBuilder.of("$appUrl/autores/{id}").expand(mutableMapOf(Pair("id", it.id)))
             return HttpResponse.created(uri)
         }
@@ -53,7 +53,7 @@ class UserController(
     fun update(@PathVariable id: String, @Valid @Body request: UpdateUserRequest): HttpResponse<Any> {
         userRepository.findById(id).let {
             if (it.isEmpty)
-                return HttpResponse.notFound(mapOf(Pair("message", "user not found")))
+                return HttpResponse.notFound(mapOf(Pair("mensagem", "usuário não encontrado!")))
             it.get().username = request.username
             userRepository.update(it.get())
             return HttpResponse.ok(UserResponse(it.get()))
@@ -64,7 +64,7 @@ class UserController(
     fun delete(@PathVariable id: String): HttpResponse<Any> {
         userRepository.findById(id).let {
             if (it.isEmpty)
-                return HttpResponse.notFound(mapOf(Pair("message", "user not found")))
+                return HttpResponse.notFound(mapOf(Pair("mensagem", "usuário não encontrado!")))
             userRepository.deleteById(id)
             return HttpResponse.noContent()
         }
