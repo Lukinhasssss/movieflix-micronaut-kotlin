@@ -4,20 +4,14 @@ import org.hibernate.annotations.GenericGenerator
 import javax.persistence.*
 
 @Entity
-@Table(name = "tb_user")
-data class User(
+@Table(name = "tb_genre")
+data class Genre(
 
     @Id @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String? = null,
 
-    @Column(nullable = false, unique = true)
-    var username: String,
-
-    @Column(nullable = false, unique = true)
-    val email: String,
-
     @Column(nullable = false)
-    val password: String
+    val name: String
 
 )

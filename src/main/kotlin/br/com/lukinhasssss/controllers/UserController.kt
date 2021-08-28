@@ -43,7 +43,8 @@ class UserController(
     fun registry(@Valid @Body request: NewUserRequest): HttpResponse<Unit> {
         request.convertToUser(passwordEncoder).let {
             userRepository.save(it)
-            val uri = UriBuilder.of("$appUrl/autores/{id}").expand(mutableMapOf(Pair("id", it.id)))
+            val uri = HttpResponse.uri("$appUrl/autores/${it.id}")
+//            val uri = UriBuilder.of("$appUrl/autores/{id}").expand(mutableMapOf(Pair("id", it.id)))
             return HttpResponse.created(uri)
         }
     }

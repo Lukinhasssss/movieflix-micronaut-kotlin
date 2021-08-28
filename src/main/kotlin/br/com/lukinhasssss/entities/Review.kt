@@ -15,6 +15,9 @@ data class Review(
     val text: String,
 
     @ManyToOne
-    val user: User
+    val user: User,
+
+    @ManyToOne
+    val movie: Movie
 
 )
