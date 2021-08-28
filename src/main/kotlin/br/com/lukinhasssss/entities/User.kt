@@ -1,6 +1,7 @@
 package br.com.lukinhasssss.entities
 
 import org.hibernate.annotations.GenericGenerator
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -18,6 +19,8 @@ data class User(
     val email: String,
 
     @Column(nullable = false)
-    val password: String
+    val password: String,
+
+    val createdAt: LocalDateTime = LocalDateTime.now()
 
 )

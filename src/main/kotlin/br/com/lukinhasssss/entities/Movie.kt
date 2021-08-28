@@ -1,6 +1,7 @@
 package br.com.lukinhasssss.entities
 
 import org.hibernate.annotations.GenericGenerator
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -30,6 +31,8 @@ data class Movie(
     val genre: Genre,
 
     @OneToMany(mappedBy = "movie")
-    val reviews: List<Review> = ArrayList<Review>()
+    val reviews: List<Review> = ArrayList<Review>(),
+
+    val createdAt: LocalDateTime = LocalDateTime.now()
 
 )

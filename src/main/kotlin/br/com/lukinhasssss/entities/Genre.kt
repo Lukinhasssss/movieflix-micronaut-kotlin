@@ -1,6 +1,7 @@
 package br.com.lukinhasssss.entities
 
 import org.hibernate.annotations.GenericGenerator
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -12,6 +13,8 @@ data class Genre(
     val id: String? = null,
 
     @Column(nullable = false, unique = true)
-    val name: String
+    val name: String,
+
+    val createdAt: LocalDateTime = LocalDateTime.now()
 
 )

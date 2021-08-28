@@ -64,6 +64,7 @@ class GenreController(
             if (it.isEmpty)
                 return HttpResponse.notFound(mapOf(Pair("mensagem", "gênero não encontrado!")))
 
+            genreRepository.delete(it.get())
             return HttpResponse.noContent()
         }
     }
