@@ -1,6 +1,17 @@
 micronaut:
   application:
     name: movieflix
+  security:
+    endpoints:
+      login:
+        enabled: true
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: '"${JWT_SECRET:eq6f5v4eafv1+9qae4fv+wqrd1vw9+df1+awe19q+wer84v1+qr}"'
   data:
     pageable:
       default-page-size: 10

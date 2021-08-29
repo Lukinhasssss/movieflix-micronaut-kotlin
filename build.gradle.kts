@@ -34,17 +34,21 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     implementation("io.micronaut.xml:micronaut-jackson-xml")
-//    implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
-
-    // BCrypt Password Encoder
-    implementation("org.springframework.security:spring-security-crypto:5.4.2")
-    compile("commons-logging:commons-logging:1.2")
 
     // JPA
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("org.postgresql:postgresql:42.2.23")
+
+    // BCrypt Password Encoder
+    implementation("org.springframework.security:spring-security-crypto:5.4.2")
+    compile("commons-logging:commons-logging:1.2")
+
+    // Security
+    kapt("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+//    implementation("io.micronaut.security:micronaut-security-oauth2")
 
     // Tests
     testAnnotationProcessor("io.micronaut:micronaut-inject-java")
