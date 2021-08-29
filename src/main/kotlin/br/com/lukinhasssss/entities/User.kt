@@ -21,6 +21,9 @@ data class User(
     @Column(nullable = false)
     val password: String,
 
+    @ManyToOne
+    val role: Role,
+
     val createdAt: LocalDateTime = LocalDateTime.now()
 
 )

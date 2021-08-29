@@ -5,6 +5,10 @@ micronaut:
     endpoints:
       login:
         enabled: true
+        path: "/login"
+      logout:
+        enabled: true
+        path: "/logout"
     authentication: bearer
     token:
       jwt:

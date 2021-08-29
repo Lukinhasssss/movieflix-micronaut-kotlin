@@ -4,12 +4,14 @@ import br.com.lukinhasssss.config.security.BCryptPasswordEncoder
 import br.com.lukinhasssss.dto.request.NewUserRequest
 import br.com.lukinhasssss.dto.request.UpdateUserRequest
 import br.com.lukinhasssss.dto.response.UserResponse
+import br.com.lukinhasssss.repositories.RoleRepository
 import br.com.lukinhasssss.repositories.UserRepository
 import io.micronaut.context.annotation.Value
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
+import javax.annotation.security.PermitAll
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
 import javax.validation.Valid
@@ -18,6 +20,7 @@ import javax.validation.Valid
 @Controller("/users")
 class UserController(
     val userRepository: UserRepository,
+    val roleRepository: RoleRepository,
     val passwordEncoder: BCryptPasswordEncoder
 ) {
 
@@ -40,8 +43,9 @@ class UserController(
     }
 
     @Post
+    @PermitAll
     fun registry(@Valid @Body request: NewUserRequest): HttpResponse<Unit> {
-        request.toEntity(passwordEncoder).let {
+        request.toEntity(passwordEncoder, roleRepository).let {
             userRepository.save(it)
             val uri = HttpResponse.uri("$appUrl/users/${it.id}")
 //            val uri = UriBuilder.of("$appUrl/autores/{id}").expand(mutableMapOf(Pair("id", it.id)))
