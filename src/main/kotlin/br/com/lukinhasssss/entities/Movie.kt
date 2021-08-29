@@ -30,9 +30,6 @@ data class Movie(
     @ManyToOne
     val genre: Genre,
 
-    @OneToMany(mappedBy = "movie")
-    val reviews: List<Review> = ArrayList<Review>(),
-
     val createdAt: LocalDateTime = LocalDateTime.now()
 
 )

@@ -1,6 +1,15 @@
 micronaut:
   application:
     name: movieflix
+  data:
+    pageable:
+      default-page-size: 10
+#      max-page-size: int
+#      sort-ignore-case: boolean
+#      sort-parameter-name: string
+#      size-parameter-name: string
+#      page-parameter-name: string
+#      sort-delimiter: java.util.regex.Pattern
 
 datasources:
   default:
