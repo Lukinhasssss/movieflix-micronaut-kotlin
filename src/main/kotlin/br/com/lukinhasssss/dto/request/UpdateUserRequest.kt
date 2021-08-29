@@ -8,8 +8,7 @@ import javax.validation.constraints.NotBlank
 @Introspected
 data class UpdateUserRequest(
 
-    @NotBlank(message = "username cannot be empty or blank")
-    @field:CheckIfExists(domainClass = User::class, fieldName = "username", message = "there is already a user with this username")
-    val username: String
+    @field:NotBlank(message = "Campo obrigatório!")
+    val role: String
 
 )

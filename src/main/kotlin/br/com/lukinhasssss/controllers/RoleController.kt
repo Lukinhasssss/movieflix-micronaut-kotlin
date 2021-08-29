@@ -9,6 +9,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 import io.micronaut.validation.Validated
 import javax.annotation.security.PermitAll
+import javax.annotation.security.RolesAllowed
 import javax.validation.Valid
 
 @Validated
@@ -21,6 +22,7 @@ class RoleController(
     lateinit var appUrl: String
 
     @Get
+    @RolesAllowed(value = ["ADMIN"])
     fun findAll(): HttpResponse<List<Map<String, String>>> {
         val roles = roleRepository.findAll().map { mapOf(Pair("name", it.name)) }
 
@@ -28,6 +30,7 @@ class RoleController(
     }
 
     @Get("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun findById(id: String): HttpResponse<Any> {
         val role = roleRepository.findById(id)
 
@@ -38,7 +41,7 @@ class RoleController(
     }
 
     @Post
-    @PermitAll
+    @RolesAllowed(value = ["ADMIN"])
     fun registry(@Valid @Body request: NewRoleRequest): HttpResponse<Unit> {
         val role = request.toEntity()
         roleRepository.save(role)
@@ -49,6 +52,7 @@ class RoleController(
     }
 
     @Put("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun update(id: String, @Valid @Body request: UpdateRoleRequest): HttpResponse<Any> {
         roleRepository.findById(id).let {
             if (it.isEmpty)
@@ -61,6 +65,7 @@ class RoleController(
     }
 
     @Delete("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun delete(id: String): HttpResponse<Any> {
         roleRepository.findById(id).let {
             if (it.isEmpty)

@@ -32,7 +32,7 @@ data class NewUserRequest(
             username = username,
             email = email,
             password = passwordEncoder.encode(password),
-            role = roleRepository.findByName("MEMBER").get()
+            role = roleRepository.findByName("VISITOR").get()
         )
     }
 

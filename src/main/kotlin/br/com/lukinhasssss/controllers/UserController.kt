@@ -12,6 +12,7 @@ import io.micronaut.http.annotation.*
 import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
 import javax.annotation.security.PermitAll
+import javax.annotation.security.RolesAllowed
 import javax.persistence.EntityManager
 import javax.transaction.Transactional
 import javax.validation.Valid
@@ -28,12 +29,14 @@ class UserController(
     lateinit var appUrl: String
 
     @Get
+    @RolesAllowed(value = ["ADMIN"])
     fun findAll(): HttpResponse<List<UserResponse>> {
         val users = userRepository.findAll().map { user -> UserResponse(user) }
         return HttpResponse.ok(users)
     }
 
     @Get("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun findById(@PathVariable id: String): HttpResponse<Any> {
         userRepository.findById(id).let {
             if (it.isEmpty)
@@ -48,23 +51,24 @@ class UserController(
         request.toEntity(passwordEncoder, roleRepository).let {
             userRepository.save(it)
             val uri = HttpResponse.uri("$appUrl/users/${it.id}")
-//            val uri = UriBuilder.of("$appUrl/autores/{id}").expand(mutableMapOf(Pair("id", it.id)))
             return HttpResponse.created(uri)
         }
     }
 
     @Put("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun update(@PathVariable id: String, @Valid @Body request: UpdateUserRequest): HttpResponse<Any> {
         userRepository.findById(id).let {
             if (it.isEmpty)
                 return HttpResponse.notFound(mapOf(Pair("mensagem", "usuário não encontrado!")))
-            it.get().username = request.username
+            val user = it.get().copy(role = it.get().role.copy(name = request.role))
             userRepository.update(it.get())
             return HttpResponse.ok(UserResponse(it.get()))
         }
     }
 
     @Delete("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun delete(@PathVariable id: String): HttpResponse<Any> {
         userRepository.findById(id).let {
             if (it.isEmpty)

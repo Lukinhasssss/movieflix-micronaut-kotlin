@@ -21,7 +21,7 @@ class UserAuthenticationProvider(
         val user = userRepository.findByUsername(authenticationRequest.identity as @NotBlank String)
 
         if (user.isPresent && bCryptPasswordEncoder.matches(authenticationRequest.secret.toString(), user.get().password))
-            return Flowable.just(UserDetails(user.get().username, listOf())) // second parameter is the roles list of user
+            return Flowable.just(UserDetails(user.get().username, listOf(user.get().role.name))) // second parameter is the roles list of user
 
         return Flowable.error(AuthenticationException(AuthenticationFailed(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH)))
 //        return Flowable.error(AuthenticationException(AuthenticationFailed("Usuário ou senha inválidos!")))

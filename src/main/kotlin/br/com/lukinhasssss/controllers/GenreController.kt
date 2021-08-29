@@ -8,6 +8,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 import io.micronaut.validation.Validated
 import java.util.function.Consumer
+import javax.annotation.security.RolesAllowed
 import javax.validation.Valid
 
 @Validated
@@ -20,6 +21,7 @@ class GenreController(
     lateinit var appUrl: String
 
     @Get
+    @RolesAllowed(value = ["ADMIN"])
     fun findAll(): HttpResponse<List<Map<String, String>>> {
         val genres = genreRepository.findAll().map { mapOf(Pair("name", it.name)) }
 
@@ -27,6 +29,7 @@ class GenreController(
     }
 
     @Get("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun findById(id: String): HttpResponse<Any> {
         val genre = genreRepository.findById(id)
 
@@ -37,6 +40,7 @@ class GenreController(
     }
 
     @Post
+    @RolesAllowed(value = ["ADMIN"])
     fun registry(@Valid @Body request: NewGenreRequest): HttpResponse<Unit> {
         val genre = request.toEntity()
         genreRepository.save(genre)
@@ -47,6 +51,7 @@ class GenreController(
     }
 
     @Put("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun update(id: String, @Valid @Body request: UpdateGenreRequest): HttpResponse<Any> {
         genreRepository.findById(id).let {
             if (it.isEmpty)
@@ -59,6 +64,7 @@ class GenreController(
     }
 
     @Delete("/{id}")
+    @RolesAllowed(value = ["ADMIN"])
     fun delete(id: String): HttpResponse<Any> {
         genreRepository.findById(id).let {
             if (it.isEmpty)

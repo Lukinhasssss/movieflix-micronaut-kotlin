@@ -13,7 +13,7 @@ data class User(
     val id: String? = null,
 
     @Column(nullable = false, unique = true)
-    var username: String,
+    val username: String,
 
     @Column(nullable = false, unique = true)
     val email: String,
