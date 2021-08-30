@@ -24,10 +24,15 @@ class MovieController(
     @Value("\${app.url}")
     lateinit var appUrl: String
 
-    @Get
+    @Get("{?genre}")
     @RolesAllowed(value = ["VISITOR", "MEMBER", "ADMIN"])
-    fun findAll(pageable: Pageable): HttpResponse<Page<MovieResponse>> {
-        val movies = movieRepository.findAll(pageable).map { movie ->  MovieResponse(movie) }
+    fun findAll(@QueryValue genre: String?, pageable: Pageable): HttpResponse<Page<MovieResponse>> {
+        if (genre.isNullOrBlank()) {
+            val movies = movieRepository.findAll(pageable).map { movie ->  MovieResponse(movie) }
+            return HttpResponse.ok(movies)
+        }
+
+        val movies = movieRepository.findByGenreNameContains(genre, pageable).map { MovieResponse(it) }
         return HttpResponse.ok(movies)
     }
 
